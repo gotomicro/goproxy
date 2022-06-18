@@ -1,4 +1,4 @@
-APP_NAME:=saas-sso
+APP_NAME:=goproxy
 APP_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 SCRIPT_PATH:=$(APP_PATH)/scripts
 COMPILE_OUT:=$(APP_PATH)/bin/$(APP_NAME)

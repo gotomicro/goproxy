@@ -18,4 +18,9 @@ dstPort = 9999
 
 我们可以将MySQL配置暴露到某个POD的一个端口
 
-然后我们在
+然后我们在使用
+```bash
+kubectl port-forward pod/{你的pod名称}  19999:9999  
+```
+
+访问本地 :19999， 那么你就可以访问到远端的mysql

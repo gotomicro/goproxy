@@ -1,5 +1,5 @@
 # API build stage
-FROM golang:1.18.3-alpine3.14 as go-builder
+FROM golang:1.18.3-alpine3.16 as go-builder
 ARG GOPROXY=goproxy.cn
 
 ENV GOPROXY=https://${GOPROXY},direct
@@ -10,11 +10,8 @@ WORKDIR /data
 
 COPY go.mod go.sum ./
 RUN go mod download -x
-COPY config config
-COPY Makefile Makefile
-COPY scripts scripts
-RUN make build
-
+COPY . .
+RUN ls -rlt ./ && make build
 
 # Fianl running stage
 FROM alpine:3.14.3
@@ -24,7 +21,7 @@ WORKDIR /data
 
 COPY --from=go-builder /data/bin/goproxy ./bin/
 COPY --from=go-builder /data/config ./config
-
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk add --no-cache tzdata
 
 CMD ["sh", "-c", "./bin/goproxy"]
