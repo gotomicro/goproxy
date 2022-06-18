@@ -1,4 +1,4 @@
-# API build stage
+# Build stage
 FROM golang:1.18.3-alpine3.16 as go-builder
 ARG GOPROXY=goproxy.cn
 
@@ -13,7 +13,7 @@ RUN go mod download -x
 COPY . .
 RUN ls -rlt ./ && make build
 
-# Fianl running stage
+# Final running stage
 FROM alpine:3.14.3
 LABEL maintainer="goproxy@gotomicro.com"
 
